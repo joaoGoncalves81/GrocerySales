@@ -37,7 +37,6 @@ namespace SalesWeb
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .UseUrls("http://0.0.0.0:6500/")
                 .UseStartup<Startup>();
     }

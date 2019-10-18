@@ -121,7 +121,6 @@ namespace SalesWeb
             services.AddScoped<ICatalogService, CachedCatalogService>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IBasketViewModelService, BasketViewModelService>();
-            services.AddScoped<ICustomizeViewModelService, CustomizeViewModelService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IBasketRepository, BasketGroceryRepository>();
             services.AddScoped<CatalogService>();
