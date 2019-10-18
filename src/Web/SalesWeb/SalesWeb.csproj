@@ -5,12 +5,15 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="BuildBundlerMinifier" Version="3.1.430" />    
+    <PackageReference Include="BuildBundlerMinifier" Version="3.1.430" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.2" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\ApplicationCore\ApplicationCore.csproj" />
     <ProjectReference Include="..\..\Shared\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>  
+  </ItemGroup>
+  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
+    <Exec Command="dotnet bundle" />
+  </Target>
 </Project>
