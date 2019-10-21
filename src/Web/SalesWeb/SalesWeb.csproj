@@ -13,7 +13,4 @@
     <ProjectReference Include="..\..\Shared\ApplicationCore\ApplicationCore.csproj" />
     <ProjectReference Include="..\..\Shared\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="dotnet bundle" />
-  </Target>
 </Project>
