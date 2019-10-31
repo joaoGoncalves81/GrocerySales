@@ -3,26 +3,25 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="row">
-    <div class="col-md-12">
-        <img src="~/images/dama_backoffice.jpg" width="100%" alt="Dama Backoffice" />
-    </div>
+<div class="jumbotron">
+    <h1 class="display-4">Backoffice - Sabor com Tradição!</h1>
+    <p class="lead">Configuração dos produtos usados no sabor com tradição.</p>    
 </div>
 <div class="row">
     <div class="col-md-3">
-        <a asp-page="/Category/Index">
+        <a asp-page="/Categories/Index">
             <div class="thumbnail">
                 <img src="~/images/category.jpg" alt="Categorias">
             </div>
         </a>
     </div>
     <div class="col-md-3">
-        <a asp-page="/CatalogType/Index">
+        <a asp-page="/CatalogTypes/Index">
             <div class="thumbnail">
                 <img src="~/images/productType.jpg" alt="Tipos de Produto">
             </div>
         </a>
-    </div>  
+    </div>
     <div class="col-md-3">
         <a asp-page="/Products/Index">
             <div class="thumbnail">

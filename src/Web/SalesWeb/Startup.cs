@@ -42,7 +42,7 @@ namespace SalesWeb
 
             // use real database            
             services.AddDbContext<GroceryContext>(options => 
-                options.UseMySql(Configuration.GetConnectionString("SalesShopConnection")));
+                options.UseMySql(Configuration.GetConnectionString("GroceryConnection")));
 
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
@@ -56,7 +56,7 @@ namespace SalesWeb
         {
             // use real database            
             services.AddDbContext<GroceryContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("SalesShopConnection")));
+                options.UseMySql(Configuration.GetConnectionString("GroceryConnection")));
 
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
