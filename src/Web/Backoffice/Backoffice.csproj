@@ -13,21 +13,13 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.4" />    
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />    
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
-  </ItemGroup>  
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="3.1.430" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\ApplicationCore\ApplicationCore.csproj" />
     <ProjectReference Include="..\..\Shared\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>  
-  <ItemGroup>
-    <Content Update="Pages\Sales\Details.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Pages\Sales\Index.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Pages\Sales\_StatusMessage.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>  
   <ItemGroup>
     <Folder Include="wwwroot\images\products\" />
