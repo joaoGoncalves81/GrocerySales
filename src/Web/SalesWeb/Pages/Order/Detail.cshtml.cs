@@ -50,7 +50,6 @@ namespace SalesWeb.Pages.Order
                     PictureUrl = oi.ItemOrdered.PictureUri,
                     ProductId = oi.ItemOrdered.CatalogItemId,
                     ProductName = oi.ItemOrdered.ProductName,
-                    CustomizeName = oi.CustomizeName,
                     UnitPrice = oi.UnitPrice,
                     Units = oi.Units
                     //Attributes = _orderService.GetOrderAttributes(oi.ItemOrdered.CatalogItemId, oi.CatalogAttribute1, oi.CatalogAttribute2, oi.CatalogAttribute3)

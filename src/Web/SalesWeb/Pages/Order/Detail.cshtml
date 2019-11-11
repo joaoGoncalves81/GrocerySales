@@ -70,11 +70,6 @@
                     </section>
                     <section class="esh-orders_detail-item esh-orders_detail-item--middle col-8 col-sm-3">
                         <span class="d-sm-none">@item.Units x </span>@item.ProductName
-                        @if (!string.IsNullOrEmpty(item.CustomizeName))
-                        {
-                            <br />
-                            <small id="nameInputText" class="text-muted dama-small-text">Personalização: @item.CustomizeName</small>
-                        }
                         @if (item.Attributes?.Count > 0)
                         {
                             foreach (var attr in item.Attributes)

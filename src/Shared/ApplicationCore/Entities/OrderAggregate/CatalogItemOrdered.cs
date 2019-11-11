@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ApplicationCore.Entities.OrderAggregate
 {
@@ -25,6 +26,11 @@ namespace ApplicationCore.Entities.OrderAggregate
         public void Rename(string name)
         {
             this.ProductName = name;
+        }
+
+        internal void Rename(object customizeName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
