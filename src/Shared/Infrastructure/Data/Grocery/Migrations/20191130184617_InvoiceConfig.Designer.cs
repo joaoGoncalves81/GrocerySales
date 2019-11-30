@@ -3,14 +3,16 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Data.Grocery.Migrations
 {
     [DbContext(typeof(GroceryContext))]
-    partial class GroceryContextModelSnapshot : ModelSnapshot
+    [Migration("20191130184617_InvoiceConfig")]
+    partial class InvoiceConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,8 +201,6 @@ namespace Infrastructure.Data.Grocery.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("IsActive");
-
                     b.Property<DateTime?>("LastRunDate");
 
                     b.Property<decimal>("MaxValue");
@@ -208,6 +208,8 @@ namespace Infrastructure.Data.Grocery.Migrations
                     b.Property<int>("NrInvoices");
 
                     b.Property<int>("Week");
+
+                    b.Property<int>("WeekState");
 
                     b.HasKey("Id");
 

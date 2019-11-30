@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Grocery.Migrations
 {
     [DbContext(typeof(GroceryContext))]
-    [Migration("20191130000538_InvoiceConfig")]
-    partial class InvoiceConfig
+    [Migration("20191130191226_InvoiceConfig2")]
+    partial class InvoiceConfig2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -201,17 +201,15 @@ namespace Infrastructure.Data.Grocery.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<DateTime?>("LastRunDate");
+
+                    b.Property<decimal>("MaxValue");
 
                     b.Property<int>("NrInvoices");
 
-                    b.Property<decimal>("TotalMaxValue");
-
-                    b.Property<decimal>("TotalMinValue");
-
                     b.Property<int>("Week");
-
-                    b.Property<int>("WeekState");
 
                     b.HasKey("Id");
 

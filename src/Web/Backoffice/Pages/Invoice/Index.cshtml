@@ -6,36 +6,84 @@
 
 <h2>Configuração da Faturação</h2>
 
-@foreach (var item in Model.Configs)
-{
-<form method="post">
-    <div class="form-group">
-        <label asp-for="@item.Week" class="control-label"></label>
-        <input asp-for="@item.Week" class="form-control" readonly="readonly" />
-        <span asp-validation-for="@item.Week" class="text-danger"></span>
-    </div>
-    <div class="checkbox">
-        <label asp-for="@item.WeekState">
-            <input asp-for="@item.WeekState"> Ativo
-        </label>
-    </div>
-    <div class="form-group">
-        <label asp-for="@item.TotalMinValue" class="control-label"></label>
-        <input asp-for="@item.TotalMinValue" class="form-control" />
-        <span asp-validation-for="@item.TotalMinValue" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@item.TotalMaxValue" class="control-label"></label>
-        <input asp-for="@item.TotalMaxValue" class="form-control" />
-        <span asp-validation-for="@item.TotalMaxValue" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@item.NrInvoices" class="control-label"></label>
-        <input asp-for="@item.NrInvoices" class="form-control" />
-        <span asp-validation-for="@item.NrInvoices" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-default">Atualizar</button>
-</form>
-<hr />
-}
+<div class="col-md-9">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Configs[0].Week)</th>
+                    <th>@Html.DisplayNameFor(model => model.Configs[0].IsActive)</th>
+                    <th>@Html.DisplayNameFor(model => model.Configs[0].MaxValue)</th>
+                    <th>@Html.DisplayNameFor(model => model.Configs[0].NrInvoices)</th>
+                    <th>Total por Dia</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Configs.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" asp-for="Configs[i].Id" />
+                            <input type="hidden" asp-for="Configs[i].LastRunDate" />
+                            <input type="hidden" asp-for="Configs[i].Week" />
+                            @Html.DisplayFor(modelItem => Model.Configs[i].Week)
+                        </td>
+                        <td>
+                            <input asp-for="Configs[i].IsActive">
+                        </td>
+                        <td>
+                            <input asp-for="Configs[i].MaxValue" class="form-control decimal invoice-var invoice-max" />
+                        </td>
+                        <td>
+                            <input asp-for="Configs[i].NrInvoices" class="form-control invoice-var invoice-nr" />
+                        </td>
+                        <td>
+                            <span class="totalperday">@((Model.Configs[i].MaxValue * Model.Configs[i].NrInvoices).ToString("N2"))</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="alert alert-info">
+                            Estimativa Mensal (4 semanas):
+                            <span>@Model.MonthlyEstimate.ToString("N2") €</span>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <button type="submit" class="btn btn-default">Atualizar</button>
+    </form>
+</div>
+<div class="col-md-3">
+    <h4>Cábula</h4>
+    <dl>
+        <dt>Máximo por ano</dt>
+        <dd>4 500 €</dd>
+        <dt>Nov, Dez, Jan, Fev (20%)</dt>
+        <dd>900 € (900/4= 225€ por mês)</dd>
+        <dt>Mar, Abr, Mai, Jun, Jul (30%)</dt>
+        <dd>1 350 € (1350/5= 270€ por mês)</dd>
+        <dt>Ago, Set, Out (50%)</dt>
+        <dd>2 250 € (2250/3 =750 € por mês)</dd>
+    </dl>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 
+    <script>
+        $(document).ready(function () {
+            $('.invoice-var').on('blur', function () {
+                var maxvalue = $(this).closest('tr').find('.invoice-max').val().replace(',', '.');
+                var nr = $(this).closest('tr').find('.invoice-nr').val().replace(',', '.');
+                var total = maxvalue * nr;
+                $(this).closest('tr').find('.totalperday').html(total);
+            });
+
+            
+        });
+    </script>
+}

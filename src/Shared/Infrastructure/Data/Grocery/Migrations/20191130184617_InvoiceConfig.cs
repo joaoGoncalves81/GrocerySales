@@ -33,8 +33,7 @@ namespace Infrastructure.Data.Grocery.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Week = table.Column<int>(nullable: false),
                     WeekState = table.Column<int>(nullable: false),
-                    TotalMinValue = table.Column<decimal>(nullable: false),
-                    TotalMaxValue = table.Column<decimal>(nullable: false),
+                    MaxValue = table.Column<decimal>(nullable: false),
                     NrInvoices = table.Column<int>(nullable: false),
                     LastRunDate = table.Column<DateTime>(nullable: true)
                 },

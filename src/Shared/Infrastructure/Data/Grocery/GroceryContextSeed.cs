@@ -36,6 +36,7 @@ namespace Infrastructure.Data
                         Week = item
                     });
                 }
+                await context.SaveChangesAsync();
             }
         }
 
