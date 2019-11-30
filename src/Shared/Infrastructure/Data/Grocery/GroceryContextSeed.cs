@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace Infrastructure.Data
 {
     public class GroceryContextSeed
     {
+        private static List<DayOfWeek> _weeks = new List<DayOfWeek> { DayOfWeek.Sunday, DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday };
         public static async Task SeedAsync(GroceryContext context)
         {
 
@@ -23,6 +25,17 @@ namespace Infrastructure.Data
                 });
 
                 await context.SaveChangesAsync();
+            }
+
+            if(!context.invoiceConfigs.Any())
+            {
+                foreach (var item in _weeks)
+                {
+                    context.invoiceConfigs.Add(new InvoiceConfig
+                    {
+                        Week = item
+                    });
+                }
             }
         }
 

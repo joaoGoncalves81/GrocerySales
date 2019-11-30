@@ -34,6 +34,7 @@ namespace Backoffice
 
                     var groceryContext = services.GetRequiredService<GroceryContext>();
                     GroceryContextSeed.EnsureDatabaseMigrations(groceryContext);
+                    GroceryContextSeed.SeedAsync(groceryContext).Wait();
                 }
                 catch (Exception ex)
                 {

@@ -1,0 +1,41 @@
+﻿@page
+@model Backoffice.Pages.Invoice.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Configuração da Faturação</h2>
+
+@foreach (var item in Model.Configs)
+{
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@item.Week" class="control-label"></label>
+        <input asp-for="@item.Week" class="form-control" readonly="readonly" />
+        <span asp-validation-for="@item.Week" class="text-danger"></span>
+    </div>
+    <div class="checkbox">
+        <label asp-for="@item.WeekState">
+            <input asp-for="@item.WeekState"> Ativo
+        </label>
+    </div>
+    <div class="form-group">
+        <label asp-for="@item.TotalMinValue" class="control-label"></label>
+        <input asp-for="@item.TotalMinValue" class="form-control" />
+        <span asp-validation-for="@item.TotalMinValue" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@item.TotalMaxValue" class="control-label"></label>
+        <input asp-for="@item.TotalMaxValue" class="form-control" />
+        <span asp-validation-for="@item.TotalMaxValue" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@item.NrInvoices" class="control-label"></label>
+        <input asp-for="@item.NrInvoices" class="form-control" />
+        <span asp-validation-for="@item.NrInvoices" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-default">Atualizar</button>
+</form>
+<hr />
+}
+

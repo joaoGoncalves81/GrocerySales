@@ -26,6 +26,7 @@ namespace Infrastructure.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CatalogCategory> CatalogCategories { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<InvoiceConfig> invoiceConfigs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,6 +40,12 @@ namespace Infrastructure.Data
             builder.Entity<Order>(ConfigureOrder);
             builder.Entity<OrderItem>(ConfigureOrderItem);
             builder.Entity<Country>(ConfigureCountries);
+            builder.Entity<InvoiceConfig>(ConfigureInvoiceConfigs);
+        }
+
+        private void ConfigureInvoiceConfigs(EntityTypeBuilder<InvoiceConfig> builder)
+        {
+            builder.ToTable("InvoiceConfig");
         }
 
         private void ConfigureCountries(EntityTypeBuilder<Country> builder)
