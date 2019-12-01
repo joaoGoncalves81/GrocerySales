@@ -13,11 +13,15 @@ namespace SalesWorker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IEntryPointSalesWorkerService _entrySalesWorkerService;
+        private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
-        public Worker(ILogger<Worker> logger, IEntryPointSalesWorkerService entrySalesWorkerService)
+        public Worker(ILogger<Worker> logger,
+                      IEntryPointSalesWorkerService entrySalesWorkerService,
+                      IHostApplicationLifetime hostApplicationLifetime)
         {
             _logger = logger;
             _entrySalesWorkerService = entrySalesWorkerService;
+            _hostApplicationLifetime = hostApplicationLifetime;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,6 +31,7 @@ namespace SalesWorker
             await _entrySalesWorkerService.ExecuteAsync();
             
             _logger.LogInformation("Worker finished at:  {time}", DateTimeOffset.Now);
+            _hostApplicationLifetime.StopApplication();
         }
     }
 }
