@@ -69,5 +69,15 @@ namespace ApplicationCore.Entities.BasketAggregate
         {
             _items.RemoveAll(i => i.Quantity == 0);
         }
+
+        public decimal Total()
+        {
+            var total = 0m;
+            foreach (var item in _items)
+            {
+                total += item.UnitPrice * item.Quantity;
+            }
+            return total;
+        }
     }
 }

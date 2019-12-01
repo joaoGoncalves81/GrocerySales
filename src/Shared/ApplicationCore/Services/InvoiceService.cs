@@ -15,16 +15,10 @@ namespace ApplicationCore.Services
     public class InvoiceService : IInvoiceService
     {
         private readonly ISageService _sageService;
-        private readonly IAuthConfigRepository _authConfigRepository;
-        private readonly SageSettings _settings;
 
-        public InvoiceService(ISageService sageService, 
-            IAuthConfigRepository authConfigRepository,
-            IOptions<SageSettings> settings)
+        public InvoiceService(ISageService sageService)
         {
             _sageService = sageService;
-            _authConfigRepository = authConfigRepository;
-            _settings = settings.Value;
         }
 
         public async Task<(string AccessToken, string RefreshToken)> GenerateNewAccessTokenAsync(SageApplicationType applicationType, string code)

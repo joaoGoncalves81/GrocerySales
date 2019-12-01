@@ -27,7 +27,6 @@ namespace ApplicationCore.Services
         {
             if (!string.IsNullOrEmpty(userName))
             {
-                Guard.Against.NullOrEmpty(userName, nameof(userName));
                 var basketSpec = new BasketWithItemsSpecification(userName);
                 var basket = (await _basketRepository.ListAsync(basketSpec)).LastOrDefault();
                 if (basket == null)

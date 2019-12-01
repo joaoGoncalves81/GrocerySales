@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ApplicationCore.DTOs;
 using System;
 using ApplicationCore.Exceptions;
+using ApplicationCore.Entities.BasketAggregate;
 
 namespace ApplicationCore.Services
 {
@@ -16,12 +17,12 @@ namespace ApplicationCore.Services
     {
         private readonly IAsyncRepository<Order> _orderRepository;
         private readonly IAsyncRepository<CustomizeOrder> _customizeOrderRepository;
-        private readonly IBasketRepository _basketRepository;
+        private readonly IAsyncRepository<Basket> _basketRepository;
         private readonly IAsyncRepository<CatalogItem> _itemRepository;
         private readonly IAsyncRepository<CatalogType> _catalogRepository;
         private readonly IInvoiceService _invoiceService;
 
-        public OrderService(IBasketRepository basketRepository,
+        public OrderService(IAsyncRepository<Basket> basketRepository,
             IAsyncRepository<CatalogItem> itemRepository,
             IAsyncRepository<Order> orderRepository,
             IAsyncRepository<CustomizeOrder> customizeOrderRepository,
@@ -39,7 +40,7 @@ namespace ApplicationCore.Services
         public async Task<Order> CreateOrderAsync(int basketId, string phoneNumber, int? taxNumber, Address shippingAddress, Address billingAddress, bool useBillingSameAsShipping, decimal shippingCost, string customerEmail = null, bool registerInvoice = false, PaymentType paymentType = PaymentType.CASH)
         {
             //TODO: check price
-            var basket = await _basketRepository.GetByIdWithItemsAsync(basketId);
+            var basket = await _basketRepository.GetByIdAsync(basketId);
             Guard.Against.NullBasket(basketId, basket);
             var items = new List<OrderItem>();
             foreach (var item in basket.Items)

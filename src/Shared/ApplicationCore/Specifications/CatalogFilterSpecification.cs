@@ -20,7 +20,7 @@ namespace ApplicationCore.Specifications
         public CatalogFilterSpecification(bool onlyActive)
             : base(x => !onlyActive || (onlyActive && x.ShowOnShop))
         {
-            AddInclude(x => x.CatalogPictures);
+            AddInclude(x => x.CatalogType);
         }
 
         public CatalogFilterSpecification(string slug)
