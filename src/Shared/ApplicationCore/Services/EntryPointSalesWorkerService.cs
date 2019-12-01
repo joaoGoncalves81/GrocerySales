@@ -55,7 +55,7 @@ namespace ApplicationCore.Services
 
                 var invoiceService =
                     scope.ServiceProvider
-                        .GetService<InvoiceService>();
+                        .GetService<IInvoiceService>();
 
                 var emailSender =
                     scope.ServiceProvider
@@ -140,16 +140,12 @@ namespace ApplicationCore.Services
                 if (orders.Count > 0)
                 {
                     //Send Email to client (from: info.saborcomtradicao@gmail.com)
-                    var body = $"Obrigada por escolheres a <strong>Sabor Com Tradição</strong>, no Mercado Municipal de Loulé.<br>" +
-                        $"Enviamos em anexo a fatura relativa à tua encomenda. <br>" +
-                        "<br><strong>Muito obrigada e até breve!</strong><br>" +
-                        "Susana Mendez<br>" +
-                        "<br>___________________________________________________________<br>" +
-                        "<br>Thank you to shopping at Sabor Com Tradição in Loulé, Portugal. <br>" +
-                        "We send as attach the invoice relates to your order.<br>" +
-                        "<br>Thank you, see you soon!<br>" +
-                        "Susana Mendez<br>" +
-                        "<br>http://www.saborcomtradicao.com<br>" +
+                    var body = "Olá, foram geradas as faturas em anexo para este dia! <br>" +
+                        "Podes consultar as faturas no backoffice do sabor com tradição: <br>" +
+                        "http://backoffice.saborcomtradicao.com/sales <br>" +
+                        "Ou no portal da sage: <br>" +
+                        "<br><strong>Muito obrigado e até amanhã!</strong><br>" +
+                        "João Gonçalves<br>" +
                         "<img src='https://vendas.saborcomtradicao.com//images/logo-sabor.png' alt='Sabor Com Tradição'/>";
 
                     List<(string, byte[])> files = new List<(string, byte[])>();
@@ -180,14 +176,30 @@ namespace ApplicationCore.Services
                     catch (SendEmailException ex)
                     {
                         _logger.LogError(ex, "Erro ao enviar email");
+                        throw ex;
                     }
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Something got wrong in worker: ");
-                //TODO SEND EMAIL
-                throw ex;
+                try
+                {
+                    using var scope = _serviceProvider.CreateScope();
+                    var emailSender =
+                    scope.ServiceProvider
+                        .GetService<IEmailSender>();
+
+                    await emailSender.SendEmailAsync(
+                            _settings.FromInfoEmail,
+                            _settings.CCEmails,
+                            "Erro no Sales Worker",
+                            ex.ToString());
+                }
+                catch(Exception ex2)
+                {
+                    _logger.LogError(ex2, "Error sending email");
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 @model Backoffice.Pages.Invoice.IndexModel
 @{
     ViewData["Title"] = "Index";
+    var culture = new System.Globalization.CultureInfo("pt-PT");
 }
 
 <h2>Configuração da Faturação</h2>
@@ -27,7 +28,8 @@
                             <input type="hidden" asp-for="Configs[i].Id" />
                             <input type="hidden" asp-for="Configs[i].LastRunDate" />
                             <input type="hidden" asp-for="Configs[i].Week" />
-                            @Html.DisplayFor(modelItem => Model.Configs[i].Week)
+
+                            @culture.DateTimeFormat.GetDayName(Model.Configs[i].Week).ToUpper()
                         </td>
                         <td>
                             <input asp-for="Configs[i].IsActive">

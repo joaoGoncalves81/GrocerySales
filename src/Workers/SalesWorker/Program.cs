@@ -33,11 +33,14 @@ namespace SalesWorker
                         options.UseMySql(hostContext.Configuration.GetConnectionString("GroceryConnection")));
 
                     services.AddScoped(typeof(IAsyncRepository<>), typeof(EfGroceryRepository<>));
-                    services.AddScoped<IOrderService, OrderService>();
-                    services.AddScoped<IInvoiceService, InvoiceService>();
+                    services.AddScoped<IOrderService, OrderService>();                    
                     services.AddScoped<ISageService, SageService>();
                     services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
                     services.AddScoped<IAuthConfigRepository, AuthConfigRepository>();
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                        services.AddScoped<IInvoiceService, InvoiceTestService>();
+                    else
+                        services.AddScoped<IInvoiceService, InvoiceService>();
                     services.AddTransient<IEmailSender, EmailSender>();
                     services.AddSingleton<IEntryPointSalesWorkerService, EntryPointSalesWorkerService>();
 

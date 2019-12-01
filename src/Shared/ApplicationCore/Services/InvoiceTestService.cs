@@ -14,14 +14,9 @@ namespace ApplicationCore.Services
 {
     public class InvoiceTestService : IInvoiceService
     {
-        private readonly IAuthConfigRepository _authConfigRepository;
-        private readonly SageSettings _settings;
 
-        public InvoiceTestService(IAuthConfigRepository authConfigRepository,
-            IOptions<SageSettings> settings)
+        public InvoiceTestService()
         {            
-            _authConfigRepository = authConfigRepository;
-            _settings = settings.Value;
         }
 
         public Task<(string AccessToken, string RefreshToken)> GenerateNewAccessTokenAsync(SageApplicationType applicationType, string code)

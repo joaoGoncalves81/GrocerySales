@@ -25,6 +25,7 @@ namespace Backoffice.Pages.Invoice
         public async Task OnGetAsync()
         {
             Configs = await _context.invoiceConfigs.ToListAsync();
+            
             MonthlyEstimate = CalculateMonthlyEstimate();
         }
 

@@ -84,21 +84,14 @@ namespace Backoffice
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage", "RequireAdministratorRole");
                     options.Conventions.AuthorizePage("/Account/Logout", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeFolder("/Category", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeFolder("/Illustrations", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeFolder("/IllustrationsTypes", "RequireAdministratorRole");
+                    options.Conventions.AuthorizeFolder("/CatalogTypes", "RequireAdministratorRole");
+                    options.Conventions.AuthorizeFolder("/Categories", "RequireAdministratorRole");
+                    options.Conventions.AuthorizeFolder("/Invoice", "RequireAdministratorRole");
                     options.Conventions.AuthorizeFolder("/Products", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeFolder("/ProductType", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeFolder("/ShopConfig", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeFolder("/Orders", "RequireAdministratorRole");
                     options.Conventions.AuthorizeFolder("/Sage", "RequireAdministratorRole");
+                    options.Conventions.AuthorizeFolder("/Sales", "RequireAdministratorRole");
+                    options.Conventions.AuthorizeFolder("/Stock", "RequireAdministratorRole");
                     options.Conventions.AuthorizePage("/Index", "RequireAdministratorRole");
-                    options.Conventions.AuthorizePage("/Stock", "RequireAdministratorRole");
-                    options.Conventions.AuthorizeAreaFolder("Grocery", "/CatalogTypes", "RequireGroceryRole");
-                    options.Conventions.AuthorizeAreaFolder("Grocery", "/Categories", "RequireGroceryRole");
-                    options.Conventions.AuthorizeAreaFolder("Grocery", "/Products", "RequireGroceryRole");
-                    options.Conventions.AuthorizeAreaFolder("Grocery", "/Stock", "RequireGroceryRole");
-                    options.Conventions.AuthorizeAreaFolder("Grocery", "/Sales", "RequireAdministratorRole");
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

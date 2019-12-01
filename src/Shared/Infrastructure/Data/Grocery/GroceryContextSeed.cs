@@ -10,7 +10,7 @@ namespace Infrastructure.Data
 {
     public class GroceryContextSeed
     {
-        private static List<DayOfWeek> _weeks = new List<DayOfWeek> { DayOfWeek.Sunday, DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday };
+        private static List<DayOfWeek> _weeks = new List<DayOfWeek> { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday};
         public static async Task SeedAsync(GroceryContext context)
         {
 
