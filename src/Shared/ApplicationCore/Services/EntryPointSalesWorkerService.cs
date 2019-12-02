@@ -144,6 +144,7 @@ namespace ApplicationCore.Services
                         "Podes consultar as faturas no backoffice do sabor com tradição: <br>" +
                         "http://backoffice.saborcomtradicao.com/sales <br>" +
                         "Ou no portal da sage: <br>" +
+                        "https://app.pt.sageone.com/facturacao <br>" +
                         "<br><strong>Muito obrigado e até amanhã!</strong><br>" +
                         "João Gonçalves<br>" +
                         "<img src='https://vendas.saborcomtradicao.com//images/logo-sabor.png' alt='Sabor Com Tradição'/>";
