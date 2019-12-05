@@ -107,7 +107,7 @@ namespace SalesWeb
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfGroceryRepository<>));
 

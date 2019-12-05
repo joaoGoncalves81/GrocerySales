@@ -81,6 +81,14 @@ namespace ApplicationCore.Services
                 var spec = new CatalogFilterSpecification(true);
                 var catalog = await catalogRepository.ListAsync(spec);
                 List<Order> orders = new List<Order>();
+                //Check if already send today
+                var workerOrders = await orderService.GetOrdersAsync(WORKER_USER);
+                var ordersOfToday = workerOrders.Where(x => x.OrderDate.Date == DateTime.Now.Date).ToList();
+                if(ordersOfToday.Count > 0)
+                {
+                    _logger.LogWarning("There already orders for today, ignoring...");
+                    return;
+                }
                 for (int i = 0; i < dayConfig.NrInvoices; i++)
                 {
                     await DeleteWorkerBasket(basketRepository);
