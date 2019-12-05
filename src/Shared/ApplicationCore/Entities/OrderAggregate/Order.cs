@@ -28,7 +28,6 @@ namespace ApplicationCore.Entities.OrderAggregate
             PhoneNumber = phoneNumber;
             OrderState = OrderStateType.PENDING;
             Observations = observations;
-            OrderDate = DateTime.Now;
         }
         public string BuyerId { get; private set; }
         public string CustomerEmail { get; set; }
