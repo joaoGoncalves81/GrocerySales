@@ -13,10 +13,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Globalization;
 
 namespace Backoffice
@@ -79,8 +79,7 @@ namespace Backoffice
 
 
 
-            services.AddMvc()
-                .AddRazorPagesOptions(options =>
+            services.AddRazorPages(options =>
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage", "RequireAdministratorRole");
                     options.Conventions.AuthorizePage("/Account/Logout", "RequireAdministratorRole");
@@ -92,10 +91,9 @@ namespace Backoffice
                     options.Conventions.AuthorizeFolder("/Sales", "RequireAdministratorRole");
                     options.Conventions.AuthorizeFolder("/Stock", "RequireAdministratorRole");
                     options.Conventions.AuthorizePage("/Index", "RequireAdministratorRole");
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                });
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup));
 
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
@@ -110,12 +108,11 @@ namespace Backoffice
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -140,14 +137,17 @@ namespace Backoffice
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
+            app.UseRouting();
 
-            app.UseMvc(routes =>
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
+
+            
         }
     }
 }

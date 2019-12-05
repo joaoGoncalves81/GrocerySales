@@ -33,12 +33,14 @@ namespace SalesWeb.Pages.Order
                 return NotFound();
 
             string countryName = "Portugal";
-            int.TryParse(order.BillingToAddress.Country, out int countryCode);
-            if(countryCode != 0)
+            if (int.TryParse(order.BillingToAddress?.Country, out int countryCode))
             {
-                var country = await _countryRepository.GetByIdAsync(countryCode);
-                if (country != null)
-                    countryName = country.Name;
+                if (countryCode != 0)
+                {
+                    var country = await _countryRepository.GetByIdAsync(countryCode);
+                    if (country != null)
+                        countryName = country.Name;
+                }
             }
             
             OrderDetails = new OrderViewModel()

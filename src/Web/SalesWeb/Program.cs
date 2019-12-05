@@ -6,6 +6,7 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
 
 namespace SalesWeb
 {
@@ -13,7 +14,7 @@ namespace SalesWeb
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -35,9 +36,17 @@ namespace SalesWeb
             host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://0.0.0.0:6500/")
-                .UseStartup<Startup>();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        // Set properties and call methods on options                        
+                    })
+                    .UseUrls("http://0.0.0.0:6500/")
+                    .UseStartup<Startup>();
+                });
     }
 }
+

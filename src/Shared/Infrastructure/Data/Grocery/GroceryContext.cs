@@ -70,9 +70,6 @@ namespace Infrastructure.Data
             var navigation = builder.Metadata.FindNavigation(nameof(Basket.Items));
 
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
-            
-            builder.Ignore(x => x.Observations);
-            builder.Ignore(x => x.IsGuest);
         }
 
         private void ConfigureBasketItem(EntityTypeBuilder<BasketItem> builder)

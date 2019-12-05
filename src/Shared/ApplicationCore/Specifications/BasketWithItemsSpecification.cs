@@ -9,8 +9,8 @@ namespace ApplicationCore.Specifications
         {
             AddInclude(b => b.Items);
         }
-        public BasketWithItemsSpecification(string buyerId, bool guestOnly = false)
-            : base(b => b.BuyerId == buyerId && ((!guestOnly && !b.IsGuest) || (guestOnly && b.IsGuest)))
+        public BasketWithItemsSpecification(string buyerId)
+            : base(b => b.BuyerId == buyerId)
         {
             AddInclude(b => b.Items);
         }

@@ -1,5 +1,9 @@
-﻿using ApplicationCore.Interfaces;
+﻿using System;
+using System.Globalization;
+using ApplicationCore;
+using ApplicationCore.Interfaces;
 using ApplicationCore.Services;
+using AutoMapper;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Logging;
@@ -7,21 +11,15 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SalesWeb.Interfaces;
-using SalesWeb.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using System;
-using System.Text;
-using AutoMapper;
-using ApplicationCore;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
+using Microsoft.Extensions.Hosting;
+using SalesWeb.Interfaces;
+using SalesWeb.Services;
 
 namespace SalesWeb
 {
@@ -61,11 +59,6 @@ namespace SalesWeb
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("IdentityConnection")));
-
-            //services.AddHttpsRedirection(options =>
-            //{
-            //    options.HttpsPort = 443;
-            //});
 
             ConfigureServices(services);
 
@@ -137,8 +130,7 @@ namespace SalesWeb
             // Add memory cache services
             services.AddMemoryCache();
 
-            services.AddMvc()
-                .AddRazorPagesOptions(options =>
+            services.AddRazorPages(options =>
                 {
                     options.Conventions.AuthorizeFolder("/", "RequireGroceryStaff");
 
@@ -161,22 +153,20 @@ namespace SalesWeb
                     options.Conventions.AddPageRoute("/Account/ResetPassword", "conta/recuperar-password");
                     options.Conventions.AddPageRoute("/Account/ResetPasswordConfirmation", "conta/confirmacao-recuperacao-password");
                     options.Conventions.AddPageRoute("/Account/Manage/Index", "conta/perfil");
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                });
 
             _services = services;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-            IHostingEnvironment env)
+            IWebHostEnvironment env)
         {
             //app.UsePathBase("/loja");
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();                
             }
             else
             {
@@ -201,7 +191,10 @@ namespace SalesWeb
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
+
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.Use(async (ctx, next) =>
             {
@@ -217,7 +210,10 @@ namespace SalesWeb
                 }
             });
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
         }
     }
 }
