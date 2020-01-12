@@ -153,7 +153,8 @@ namespace SalesWeb
                     options.Conventions.AddPageRoute("/Account/ResetPassword", "conta/recuperar-password");
                     options.Conventions.AddPageRoute("/Account/ResetPasswordConfirmation", "conta/confirmacao-recuperacao-password");
                     options.Conventions.AddPageRoute("/Account/Manage/Index", "conta/perfil");
-                });
+                })
+                .AddRazorRuntimeCompilation();
 
             _services = services;
         }

@@ -6,7 +6,21 @@
 }
 
 @await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
-
+<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+    <div class="toast" style="position: absolute; top: 0; right: 0;">
+        <div class="toast-header">
+            @*<img src="" class="rounded mr-2" alt="Sabor com Tradição">*@
+            <strong class="mr-auto">Sabor com Tradição</strong>
+            <small>&nbsp;&nbsp;&nbsp;&nbsp;just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            <span id="prodAdded"></span> adicionado ao carrinho
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-12 text-right">
         <a class="btn btn-dama-menta" data-target="#addProductModal" data-toggle="modal" href="#manualProduct" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -73,11 +87,18 @@
                 window.location.href = uri;
             });
 
+            $('.toast').toast({
+                delay: 5000
+            });
+
             $('.btn-add-product').on('click', function (e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
                 $.post(form.attr('action'), form.serialize())
                     .done(function () {                       
+                        $('#prodAdded').text(form.find('.product-name').text());
+                        window.scrollTo(0, 0);
+                        $('.toast').toast('show');            
                     })
                     .fail(function () {
                         alert("Ocorreu um erro ao adicionar o produto ao carrinho");

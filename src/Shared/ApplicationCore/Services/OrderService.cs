@@ -39,8 +39,8 @@ namespace ApplicationCore.Services
 
         public async Task<Order> CreateOrderAsync(int basketId, string phoneNumber, int? taxNumber, Address shippingAddress, Address billingAddress, bool useBillingSameAsShipping, decimal shippingCost, string customerEmail = null, bool registerInvoice = false, PaymentType paymentType = PaymentType.CASH)
         {
-            //TODO: check price
-            var basket = await _basketRepository.GetByIdAsync(basketId);
+            var basketSpec = new BasketWithItemsSpecification(basketId);
+            var basket = (await _basketRepository.ListAsync(basketSpec)).LastOrDefault();
             Guard.Against.NullBasket(basketId, basket);
             var items = new List<OrderItem>();
             foreach (var item in basket.Items)
